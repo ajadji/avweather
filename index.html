@@ -214,7 +214,7 @@
     </div>
 
     <script>
-        const API_KEY = '*************************'; // Replace with your API key
+        const API_KEY = process.env.API_KEY; // Replace with your API key
         const weatherContainer = document.getElementById('weatherContainer');
         const errorMsg = document.getElementById('errorMsg');
 
