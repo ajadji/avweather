@@ -11,7 +11,7 @@ AV Weather is a modern and stylish weather forecast web application that provide
 - 📱 Mobile-friendly design for a seamless experience on all devices
 
 ## 🚀 Live Demo
-[Click here to see the live demo](#) *(Replace with the actual URL when deployed)*
+[Click here to see the live demo](https://avweather-seven.vercel.app/) *(Replace with the actual URL when deployed)*
 
 ## 🛠️ Technologies Used
 - **Frontend**: HTML, CSS (Weather Icons, Animations), JavaScript
