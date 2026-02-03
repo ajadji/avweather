@@ -1,21 +1,20 @@
-# AV Weather - Global Weather Forecast
+# AV Weather
 
-AV Weather is a modern and stylish weather forecast web application that provides real-time weather updates and a 5-day forecast for any city worldwide. Built using **HTML, CSS, and JavaScript**, it leverages the **OpenWeatherMap API** to fetch accurate weather data.
+AV Weather is a lightweight, static weather forecast web app that delivers real-time conditions and a 5‑day outlook for any city. It is built with **HTML**, **CSS**, and **JavaScript**, and uses the **OpenWeather API** for data.
 
 ## 🌟 Features
-- 🌍 Search for weather details of any city globally
-- ☀️ Real-time temperature, humidity, wind speed, and weather description
-- 🔥 Feels-like temperature for better comfort assessment
-- 📅 5-day weather forecast with icons and temperature variations
-- 🎨 Beautiful, responsive UI with smooth animations
-- 📱 Mobile-friendly design for a seamless experience on all devices
+- 🌍 Search for current weather in any city worldwide.
+- ☀️ View temperature, humidity, wind speed, and conditions.
+- 🔥 See a “feels like” temperature for comfort context.
+- 📅 5-day forecast with daily highs/lows and icons.
+- 🎨 Responsive UI with smooth animations.
 
 ## 🚀 Live Demo
-[Click here to see the live demo](https://avweather-seven.vercel.app/) *(Replace with the actual URL when deployed)*
+Replace this link with your deployment URL.
 
 ## 🛠️ Technologies Used
-- **Frontend**: HTML, CSS (Weather Icons, Animations), JavaScript
-- **API**: OpenWeatherMap API
+- **Frontend**: HTML, CSS (Weather Icons), JavaScript
+- **API**: OpenWeather API
 
 ## 🛆 Installation & Setup
 1. Clone the repository:
@@ -26,25 +25,24 @@ AV Weather is a modern and stylish weather forecast web application that provide
    ```sh
    cd avweather
    ```
-3. Open the `index.html` file in a browser.
-4. Replace `API_KEY` in the script with your OpenWeatherMap API key.
+3. Open `index.html` in a browser.
+4. Paste your OpenWeather API key in the **API key** field and click **Save API Key**.
 
 ## 🔑 How to Get an API Key
-1. Go to [OpenWeatherMap](https://openweathermap.org/api) and sign up.
-2. Navigate to the **API Keys** section in your account.
-3. Generate a new API key and replace `API_KEY` in the JavaScript file.
+1. Go to [OpenWeather](https://openweathermap.org/api) and sign up.
+2. Navigate to **API Keys** in your account.
+3. Generate a key, then paste it into the app and save it. The key is stored in your browser’s `localStorage`.
 
 ## 🖥️ Usage
-1. Open the website.
-2. Enter a city name in the search bar and click **Search**.
-3. View real-time weather conditions and a 5-day forecast.
-4. Hover over forecast cards to see more details.
+1. Open the site and save your OpenWeather API key.
+2. Enter a city name and click **Search** (or press **Enter**).
+3. View real-time weather conditions and the 5‑day forecast.
 
 ## 🔧 Future Enhancements
-- 🌎 Auto-detect user location using Geolocation API
-- 📊 Graphical representation of temperature trends
-- 🌃 Dark mode for better night-time readability
-- ⛆️ Weather alerts for severe conditions
+- 🌎 Auto-detect user location using the Geolocation API.
+- 📊 Charted temperature trends.
+- 🌙 Optional dark mode.
+- ⛆ Weather alerts for severe conditions.
 
 ## 📝 License
 This project is **open-source** and available under the **MIT License**.
@@ -54,10 +52,7 @@ Contributions are welcome! Feel free to **fork** the repository and submit a **p
 
 ## 💎 Contact
 - **Developer:** Aajad Verma  
-- **Email:** abc@xyz.com  
-- **GitHub:** [@ajadji](https://github.com/ajadji)  
-- **Telegram:** [@aajadverma](https://t.me/aajad3verma)  
+- **GitHub:** [@ajadji](https://github.com/ajadji)
 
 ---
 🌦️ **Stay informed with AV Weather!**
-
