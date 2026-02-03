@@ -45,6 +45,7 @@
             justify-content: center;
             gap: 10px;
             animation: slideIn 1s;
+            flex-wrap: wrap;
         }
 
         #cityInput {
@@ -70,6 +71,40 @@
 
         #searchBtn:hover {
             background: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        .api-key-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        #apiKeyInput {
+            padding: 12px 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            width: 320px;
+            font-size: 0.95em;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            backdrop-filter: blur(5px);
+        }
+
+        #saveKeyBtn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            background: #8bc34a;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #saveKeyBtn:hover {
+            background: #689f38;
             transform: translateY(-2px);
         }
 
@@ -132,11 +167,18 @@
             transform: translateY(-5px);
         }
 
-        .error-message {
-            color: #ff4081;
+        .message {
             text-align: center;
             margin-top: 20px;
             display: none;
+        }
+
+        .error-message {
+            color: #ff4081;
+        }
+
+        .success-message {
+            color: #c5e1a5;
         }
 
         @keyframes fadeIn {
@@ -175,11 +217,17 @@
         </header>
 
         <div class="search-container">
-            <input type="text" id="cityInput" placeholder="Enter city name...">
+            <input type="text" id="cityInput" placeholder="Enter city name..." autocomplete="off">
             <button id="searchBtn">Search</button>
         </div>
 
-        <div class="error-message" id="errorMsg">City not found! Please try again.</div>
+        <div class="api-key-container">
+            <input type="password" id="apiKeyInput" placeholder="OpenWeather API key">
+            <button id="saveKeyBtn">Save API Key</button>
+        </div>
+
+        <div class="message error-message" id="errorMsg"></div>
+        <div class="message success-message" id="successMsg">API key saved. You're ready to search!</div>
 
         <div class="weather-container" id="weatherContainer">
             <div class="current-weather">
@@ -214,31 +262,56 @@
     </div>
 
     <script>
-        const API_KEY = process.env.API_KEY; // Replace with your API key
+        let apiKey = localStorage.getItem('OPENWEATHER_API_KEY') || '';
         const weatherContainer = document.getElementById('weatherContainer');
         const errorMsg = document.getElementById('errorMsg');
+        const successMsg = document.getElementById('successMsg');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+
+        apiKeyInput.value = apiKey;
+
+        function showMessage(element, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        function hideMessage(element) {
+            element.style.display = 'none';
+        }
+
+        function requireApiKey() {
+            if (!apiKey) {
+                weatherContainer.style.display = 'none';
+                showMessage(errorMsg, 'Please add your OpenWeather API key to get started.');
+                return false;
+            }
+            hideMessage(errorMsg);
+            return true;
+        }
 
         async function getWeatherData(city) {
             try {
+                if (!requireApiKey()) return;
                 const response = await fetch(
-                    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+                    `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`
                 );
                 
                 if (!response.ok) throw new Error('City not found');
                 
                 const data = await response.json();
                 const forecastResponse = await fetch(
-                    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
+                    `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`
                 );
+                if (!forecastResponse.ok) throw new Error('Forecast unavailable');
                 const forecastData = await forecastResponse.json();
                 
                 displayWeather(data);
                 displayForecast(forecastData);
-                errorMsg.style.display = 'none';
+                hideMessage(errorMsg);
                 weatherContainer.style.display = 'block';
             } catch (error) {
                 weatherContainer.style.display = 'none';
-                errorMsg.style.display = 'block';
+                showMessage(errorMsg, 'Unable to load weather data. Check the city name and API key.');
             }
         }
 
@@ -273,20 +346,36 @@
             });
         }
 
+        document.getElementById('saveKeyBtn').addEventListener('click', () => {
+            const newKey = apiKeyInput.value.trim();
+            if (!newKey) {
+                showMessage(errorMsg, 'Please enter a valid API key.');
+                hideMessage(successMsg);
+                return;
+            }
+            apiKey = newKey;
+            localStorage.setItem('OPENWEATHER_API_KEY', apiKey);
+            hideMessage(errorMsg);
+            showMessage(successMsg, 'API key saved. You\'re ready to search!');
+        });
+
         document.getElementById('searchBtn').addEventListener('click', () => {
-            const city = document.getElementById('cityInput').value;
+            const city = document.getElementById('cityInput').value.trim();
             if (city) getWeatherData(city);
         });
 
         document.getElementById('cityInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                const city = document.getElementById('cityInput').value;
+                const city = document.getElementById('cityInput').value.trim();
                 if (city) getWeatherData(city);
             }
         });
 
-        // Initial load with default city
-        getWeatherData('London');
+        if (apiKey) {
+            getWeatherData('London');
+        } else {
+            requireApiKey();
+        }
     </script>
 </body>
 </html>
